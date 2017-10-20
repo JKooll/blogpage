@@ -1,4 +1,4 @@
-# Blog Page
+<h1><p align="center">Blog Page</p></h1>
 
 ## About Blog Page
 Blog Page is a blog framework which assist you to create your own blog quickly.
