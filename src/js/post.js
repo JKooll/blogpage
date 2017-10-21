@@ -1,10 +1,11 @@
 var vm = new Vue({
-	el: "#post",
+	el: "#app",
 	data: {
 		posts: '',
 		post: '',
 		content: '',
-		id: 0
+		id: 0,
+		title: ''
 	},
 	watch: {
 		posts: function(val, oldVal) {
@@ -24,12 +25,25 @@ var vm = new Vue({
 		getContent: getContent,
 		getPostsJson: getPostsJson,
 		renderPost: renderPost,
-		renderPageTitle: renderPageTitle
+		renderPageTitle: renderPageTitle,
+		init: init,
+		getConfig: getConfig
 	},
 	mounted: mounted
 });
 
 function mounted() {
+	// init page
+	this.init();
+}
+
+function init()
+{
+	// get title
+	this.getConfig('config.yaml').then(config => {
+		this.title = config.title;
+	});
+
 	//获取id
 	this.id = window.location.search.split('=')[1];
 
