@@ -1,12 +1,15 @@
 var app = new Vue({
     el: '#app',
     data: {
-        configPath: 'config.yml',
-        author: ''
+        author: '',
+        title: '',
+        post: ''
     },
     methods: {
         init: init,
-        getConfig: getConfig
+        getConfig: getConfig,
+        getPostConfig: getPostConfig,
+        getRequest: getRequest
     },
     mounted: mounted
 });
@@ -18,9 +21,35 @@ function mounted()
 
 function init()
 {
-    this.getConfig(this.configPath, 'author').then(
-        author => {
-            this.author = author;
+    // Set author, title
+    this.getConfig().then(
+        config => {
+            this.author = config.author;
+            this.title = config.title;
         }
     );
+
+    this.getRequest('posts/about.md').then(response => {
+        this.post = renderPost(response.body);
+    })
+}
+
+function renderPost(mkString) 
+{
+    return marked(mkString, {
+        renderer: new marked.Renderer(),
+        gfm: true,
+        tables: true,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: true,
+        highlight: highlight
+    });
+}
+
+function highlight(code, lang) 
+{
+    return Prism.highlight(code, eval("Prism.languages." + lang));
 }

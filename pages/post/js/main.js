@@ -19,9 +19,7 @@ var vm = new Vue({
 		}
 	},
 	methods: {
-		getResource: function(url, success, fail) {
-			this.$http.get(url).then(success, fail);
-		},
+		getRequest: getRequest,
 		getContent: getContent,
 		getPostsJson: getPostsJson,
 		renderPost: renderPost,
@@ -40,7 +38,7 @@ function mounted() {
 function init()
 {
 	// get title
-	this.getConfig('config.yml').then(config => {
+	this.getConfig().then(config => {
 		this.title = config.title;
 	});
 
@@ -63,7 +61,7 @@ function getPostsJson()
 		alert('Not Found Page');
 	};
 
-	this.getResource(url, success, fail);
+	this.getRequest(url).then(success.bind(this), fail.bind(this));
 }
 
 function renderPost(mkString)
@@ -81,7 +79,13 @@ function renderPost(mkString)
 	});
 }
 
-function getContent() {
+function highlight(code, lang) 
+{
+	return Prism.highlight(code, eval("Prism.languages." + lang));
+}
+
+function getContent() 
+{
 	if(!this.post) {
 
 		return this.content = '';
@@ -97,12 +101,7 @@ function getContent() {
 		alert('Not Found Page');
 	};
 
-	this.getResource(url, success, fail);
-}
-
-function highlight(code, lang)
-{
-	return Prism.highlight(code, eval("Prism.languages." + lang));
+	this.getRequest(url).then(success.bind(this), fail.bind(this));
 }
 
 function renderPageTitle()

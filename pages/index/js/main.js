@@ -13,9 +13,7 @@ var vm = new Vue({
 		postUrl: function(index) {
 			return "post.html?id=" + index;
 		},
-		getConfig: function() {
-			return getConfig('config.yml');
-		},
+		getConfig: getConfig,
 		init: function() {
 			//render title
 			this.getConfig().then(config => {

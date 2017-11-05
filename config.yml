@@ -8,12 +8,12 @@ timezone: ""
 
 # URL
 url: http://yoursite.com
-root: "/"
+root: "/github/blogpage/"
 
 # Director
-pages_dir: ""
-posts_dir: ""
-src_dir: ""
+pages_dir: "pages/"
+posts_dir: "posts/"
+src_dir: "src/"
 
 # Pagination
 # Set per_page to 0 to disable pagination
